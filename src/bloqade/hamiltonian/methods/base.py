@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, List, Callable, Protocol
 from bloqade.types import QubitType
 from bloqade.hamiltonian.types import TimeEvolution, HamiltonianOperator
+from bloqade import qasm2
 
 class SimulationMethod(ABC):
     """Base class for Hamiltonian simulation methods."""
@@ -24,7 +25,7 @@ class SimulationMethod(ABC):
         self,
         evolution: TimeEvolution,
         **kwargs
-    ) -> Callable:
+    ) -> qasm2.Method:
         """Simulate the evolution of a quantum state under a Hamiltonian.
         
         Args:
@@ -32,7 +33,7 @@ class SimulationMethod(ABC):
             **kwargs: Additional simulation parameters
             
         Returns:
-            A circuit-level function that can be used with the bloqade circuit compiler.
-            This function takes a quantum register as input and returns the evolved state.
+            A QASM circuit object that implements the Hamiltonian evolution.
+            This circuit can be optimized by Bloqade's circuit compiler.
         """
         pass
